@@ -2,13 +2,9 @@ import React from 'react';
 import { useState } from 'react';
 import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 import SocialLinks from './SocialLinks';
-import { subscribeToNewsletter } from '../lib/newsletter';
+import SupabaseNewsletter from './SupabaseNewsletter';
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
-
   const quickLinks = [
     { href: '#home', label: 'Home' },
     { href: '#courses', label: 'Courses' },
@@ -108,8 +104,8 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-start gap-3">
                 <Mail size={18} className="text-pink-400 flex-shrink-0 mt-0.5" />
-                <a href="mailto:ecrontechnologies@gmail.com" className="text-gray-400 text-sm hover:text-pink-400 transition-colors break-all leading-relaxed">
-                  ecrontechnologies@gmail.com
+                <a href="mailto:harsantal@gmail.com" className="text-gray-400 text-sm hover:text-pink-400 transition-colors break-all leading-relaxed">
+                  harsantal@gmail.com
                 </a>
               </div>
             </div>
@@ -152,33 +148,7 @@ const Footer: React.FC = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-bold mb-6 text-xl">Stay Updated</h4>
-            <p className="text-gray-400 mb-6 text-sm leading-relaxed">
-              Subscribe to our newsletter for the latest updates on courses and technology trends.
-            </p>
-            
-            <form onSubmit={handleNewsletterSubmit} className="space-y-4">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email address"
-                className="w-full px-4 py-3 bg-white/5 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
-                disabled={isSubmitting}
-              />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 disabled:from-pink-400 disabled:to-pink-500 text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-              </button>
-              {message && (
-                <p className={`text-sm ${message.includes('Thank you') ? 'text-green-400' : 'text-red-400'}`}>
-                  {message}
-                </p>
-              )}
-            </form>
+            <SupabaseNewsletter />
             
             <div className="mt-8">
               <p className="text-gray-400 mb-4 text-sm">Follow Us</p>
@@ -193,7 +163,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-800 mt-16 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm text-center md:text-left">
-              © 2024 Ecron Technologies. All rights reserved.
+              © 2025 Ecron Technologies. All rights reserved.
             </p>
             
             <div className="flex gap-8">

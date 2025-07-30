@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Calendar, Users, MapPin, Clock, ArrowRight } from 'lucide-react';
-import EventRegistrationForm from './EventRegistrationForm';
+import SupabaseEventRegistration from './SupabaseEventRegistration';
 
-const Events: React.FC = () => {
+interface EventsProps {
+  onEventRegistration?: () => void;
+}
+
+const Events: React.FC<EventsProps> = ({ onEventRegistration }) => {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
 
   const eventDetails = {
@@ -112,7 +116,13 @@ const Events: React.FC = () => {
                   {/* Registration CTA */}
                   <div className="text-center">
                     <button
-                      onClick={() => setShowRegistrationForm(true)}
+                      onClick={() => {
+                        if (onEventRegistration) {
+                          onEventRegistration();
+                        } else {
+                          setShowRegistrationForm(true);
+                        }
+                      }}
                       className="group bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-12 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-3 mx-auto"
                     >
                       <Users size={24} />
@@ -128,7 +138,7 @@ const Events: React.FC = () => {
             </div>
           </>
         ) : (
-          <EventRegistrationForm onBack={() => setShowRegistrationForm(false)} />
+          <SupabaseEventRegistration onBack={() => setShowRegistrationForm(false)} />
         )}
       </div>
     </section>

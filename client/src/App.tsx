@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Statistics from './components/Statistics';
 import Courses from './components/Courses';
 import About from './components/About';
 import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
+import SupabaseContact from './components/SupabaseContact';
 import Events from './components/Events';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
-import DemoForm from './components/DemoForm';
+import SupabaseDemoForm from './components/SupabaseDemoForm';
 import ContactPage from './components/ContactPage';
 import ModernContactPage from './components/ModernContactPage';
-import CourseDetailPage from './components/CourseDetailPage';
+import SupabaseCourseDetailPage from './components/SupabaseCourseDetailPage';
+import SupabaseEventRegistration from './components/SupabaseEventRegistration';
 import './styles/ModernContactPage.css';
 
 function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'contact' | 'modern-contact' | 'course-detail'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'contact' | 'modern-contact' | 'course-detail' | 'event-registration'>('home');
   const [selectedCourseId, setSelectedCourseId] = useState<string>('');
   const [isDemoFormOpen, setIsDemoFormOpen] = useState(false);
 
@@ -31,6 +32,8 @@ function App() {
         setCurrentView('contact');
       } else if (hash === '#modern-contact') {
         setCurrentView('modern-contact');
+      } else if (hash === '#event-registration') {
+        setCurrentView('event-registration');
       } else {
         setCurrentView('home');
       }
@@ -51,11 +54,17 @@ function App() {
     setSelectedCourseId('');
   };
 
+  const handleEventRegistration = () => {
+    setCurrentView('event-registration');
+  };
+
   return (
-    <ThemeProvider>
+    <AuthProvider>
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
-        {currentView === 'course-detail' ? (
-          <CourseDetailPage 
+        {currentView === 'event-registration' ? (
+          <SupabaseEventRegistration onBack={handleBackToHome} />
+        ) : currentView === 'course-detail' ? (
+          <SupabaseCourseDetailPage 
             courseId={selectedCourseId} 
             onBack={handleBackToHome}
           />
@@ -76,18 +85,18 @@ function App() {
             <Courses onCourseSelect={handleCourseSelect} />
             <About />
             <Testimonials />
-            <Contact />
-            <Events />
+            <SupabaseContact />
+            <Events onEventRegistration={handleEventRegistration} />
             <Footer />
             <WhatsAppFloat />
           </>
         )}
-        <DemoForm 
+        <SupabaseDemoForm 
           isOpen={isDemoFormOpen} 
           onClose={() => setIsDemoFormOpen(false)} 
         />
       </div>
-    </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
 import SocialLinks from './SocialLinks';
+import UserProfile from './UserProfile';
+import { useAuth } from '../context/AuthContext';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,6 +104,7 @@ const Header: React.FC = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               ))}
+              {user && <UserProfile />}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -130,6 +134,11 @@ const Header: React.FC = () => {
                   {item.label}
                 </a>
               ))}
+              {user && (
+                <div className="pt-4 border-t border-gray-200">
+                  <UserProfile />
+                </div>
+              )}
             </nav>
           </div>
         </div>
